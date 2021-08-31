@@ -1,9 +1,9 @@
 import useWebworkerHook from "./standard-worker-hook";
 
 const StandardContainer = () => {
-  const { disconnect, sum } = useWebworkerHook();
+  const { disconnect, runBigTask } = useWebworkerHook();
   const onClickSendMessage = () => {
-    sum(5, 10);
+    runBigTask(32000000);
   };
   const onClickDisconnect = () => {
     disconnect();

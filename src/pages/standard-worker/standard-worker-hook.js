@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
+// import { runBigTask } from "shared/utils";
+import { WORKER_EVENTS } from "shared/core/events";
 
 const useWebworkerHook = () => {
   const workerRef = useRef(
-    new Worker("../worker/standard-worker", {
+    new Worker("./worker/standard-worker", {
       name: "standard-worker",
       type: "module",
     })
@@ -10,7 +12,14 @@ const useWebworkerHook = () => {
 
   useEffect(() => {
     workerRef.current.onmessage = (e) => {
-      console.log(`[From Worker]`, e);
+      // console.log(`[From Worker]`, e.data);
+      switch (e.data.type) {
+        case WORKER_EVENTS.RUN_BIG_TASK:
+          console.log("RUN BIG TASK", e.data);
+          break;
+        default:
+          throw new Error("Unknown event");
+      }
     };
   }, [workerRef]);
 
@@ -18,11 +27,14 @@ const useWebworkerHook = () => {
     workerRef.current.terminate();
   };
 
-  const sum = (a, b) => {
-    workerRef.current.postMessage({ type: "wwww", data: { a, b } });
+  const runBigTask = (value) => {
+    workerRef.current.postMessage({
+      type: WORKER_EVENTS.RUN_BIG_TASK,
+      data: value,
+    });
   };
 
-  return { worker: workerRef, disconnect, sum };
+  return { worker: workerRef, disconnect, runBigTask };
 };
 
 export default useWebworkerHook;
