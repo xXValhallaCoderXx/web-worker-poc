@@ -8,6 +8,7 @@ const Navbar = () => {
       <Link to={ROUTES.STANDARD}>Standard</Link>
       <Link to={ROUTES.HAMSTER}>Hamster</Link>
       <Link to={ROUTES.COMLINK}>Comlink</Link>
+      <Link to={ROUTES.THREADS}>Threads</Link>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import BasicWorker from "./pages/standard-worker";
 import Hamster from "./pages/hamster";
 import Comlink from "./pages/comlink-worker";
 import MainLayout from "shared/layout/main/main-layout";
+import Threads from "./pages/threads";
 import { ROUTES } from "shared/core/routes";
 
 const RootRoutes = () => {
@@ -17,6 +18,9 @@ const RootRoutes = () => {
         </Route>
         <Route path={ROUTES.COMLINK} exact>
           <Comlink />
+        </Route>
+        <Route path={ROUTES.THREADS} exact>
+          <Threads />
         </Route>
         <Route>
           <BasicWorker />

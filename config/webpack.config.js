@@ -5,6 +5,7 @@ const path = require("path");
 const webpack = require("webpack");
 const resolve = require("resolve");
 const WebWorkerPlugin = require("worker-plugin");
+const ThreadsPlugin = require("threads-plugin");
 const PnpWebpackPlugin = require("pnp-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
@@ -559,6 +560,7 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new ThreadsPlugin(),
       new WebWorkerPlugin(),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
