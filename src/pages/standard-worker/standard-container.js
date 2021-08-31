@@ -1,10 +1,11 @@
 import useWebworkerHook from "./worker/useSingleWorker";
 import useMultiWebWorkerHook from "./multi-worker/useMultiWorker";
 import styles from "./standard-worker.module.css";
+import { randomRange } from "shared/utils";
 
 const StandardContainer = () => {
   const { disconnect, runBigTask } = useWebworkerHook();
-  const { initializePorts, sampleEventB, sendDataWorkerAPassWorkerB } =
+  const { initializePorts, mayhemButton, sendDataWorkerAPassWorkerB } =
     useMultiWebWorkerHook();
 
   const onClickSendMessage = () => {
@@ -15,11 +16,16 @@ const StandardContainer = () => {
   };
 
   const onClickInitializePorts = () => initializePorts();
-  const onClickEventB = () => sampleEventB();
-
   const onClickSendDataWorkerAPassWorkerB = () => {
-    sendDataWorkerAPassWorkerB(100);
+    sendDataWorkerAPassWorkerB(32000000);
   };
+
+  const onCLickMayhem = () => {
+    for (let index = 0; index < 5; index++) {
+      mayhemButton(randomRange(3200000, 32000000), index);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.section}>
@@ -30,8 +36,14 @@ const StandardContainer = () => {
       <div className={styles.section}>
         <h4>Simple Hook Multi Worker Example</h4>
         <button onClick={onClickInitializePorts}>INITIALIZE PORTS</button>
-        <button onClick={onClickEventB}>EVENT B</button>
+
         <button onClick={onClickSendDataWorkerAPassWorkerB}>SEND DATA</button>
+        <button
+          style={{ backgroundColor: "red", fontWeight: "bold" }}
+          onClick={onCLickMayhem}
+        >
+          MAYHEM BUTTON
+        </button>
       </div>
     </div>
   );

@@ -22,26 +22,18 @@ const useMultiWebWorkerHook = () => {
   useEffect(() => {
     workerA.current.onmessage = (e) => {
       console.log(`[From Worker-A]`, e.data);
-      // switch (e.data.type) {
-      //   case WORKER_EVENTS.RUN_BIG_TASK:
-      //     console.log("RUN BIG TASK", e.data);
-      //     break;
-      //   default:
-      //     throw new Error("Unknown event");
-      // }
     };
   }, [workerA]);
 
   useEffect(() => {
     workerB.current.onmessage = (e) => {
-      console.log(`[From Worker-B]`, e.data);
-      // switch (e.data.type) {
-      //   case WORKER_EVENTS.RUN_BIG_TASK:
-      //     console.log("RUN BIG TASK", e.data);
-      //     break;
-      //   default:
-      //     throw new Error("Unknown event");
-      // }
+      switch (e.data.type) {
+        case WORKER_EVENTS.RECIEVE_EVENT:
+          console.log("EVENT RECIEVED", e.data);
+          break;
+        default:
+          throw new Error("Unknown event");
+      }
     };
   }, [workerB]);
 
@@ -59,12 +51,6 @@ const useMultiWebWorkerHook = () => {
     ]);
   };
 
-  const sampleEventB = (value) => {
-    // post the message to w1
-    // let w1 pass the message to w2
-    workerA.current.postMessage("this message is for worker2");
-  };
-
   const sendDataWorkerAPassWorkerB = (value) => {
     // Post message to worker A
     // Let Worker A pass message to Worker B
@@ -74,12 +60,19 @@ const useMultiWebWorkerHook = () => {
     });
   };
 
+  const mayhemButton = (value, index) => {
+    workerA.current.postMessage({
+      type: WORKER_EVENTS.SEND_MAYHEM_EVENT,
+      data: { value, index },
+    });
+  };
+
   return {
     workerA,
     workerB,
     disconnect,
+    mayhemButton,
     initializePorts,
-    sampleEventB,
     sendDataWorkerAPassWorkerB,
   };
 };

@@ -18,7 +18,17 @@ self.onmessage = (e) => {
       console.log(`[WORKER-A-SEND-EVENT]`);
       // i am just a messenger, so pass it to w2
       // this port is used to talk to who eles get the other port of the MessageChannel
-      port.postMessage("boss wants me(worker1) to tell you: " + e.data);
+      port.postMessage({ type: WORKER_EVENTS.INPUT_QUEUE, data: data.data });
+      break;
+
+    case WORKER_EVENTS.SEND_MAYHEM_EVENT:
+      console.log(`[WORKER-A-SEND-EVENT]`);
+      // i am just a messenger, so pass it to w2
+      // this port is used to talk to who eles get the other port of the MessageChannel
+      port.postMessage({
+        type: WORKER_EVENTS.INPUT_MAYHEM_QUEUE,
+        data: { data: data.data.value, index: data.data.index },
+      });
       break;
     default:
       throw new Error("Unhandled Event");

@@ -7,3 +7,6 @@ const someBigTask = (int) =>
 export const runBigTask = (int) => {
   return someBigTask(int);
 };
+
+export const randomRange = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
