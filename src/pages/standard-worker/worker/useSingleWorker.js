@@ -1,10 +1,9 @@
 import { useEffect, useRef } from "react";
-// import { runBigTask } from "shared/utils";
 import { WORKER_EVENTS } from "shared/core/events";
 
 const useWebworkerHook = () => {
   const workerRef = useRef(
-    new Worker("./worker/standard-worker", {
+    new Worker("./standard-worker", {
       name: "standard-worker",
       type: "module",
     })
